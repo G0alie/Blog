@@ -1,1 +1,1 @@
-<strong>Blog<strong>
+Blog
