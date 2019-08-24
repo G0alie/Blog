@@ -20,6 +20,5 @@ title: OpenVAS
   <img src="https://i.postimg.cc/fyz9Lnxw/results.png" alt="results"/>
   <p>This is where the fun begins.  We can get a lot from this page.  The donut chart shows the results categorized by severity.  In this case, there are only high severity results and logs created by OpenVAS.  The bar graph on the right works similarly.  Remote and SMB show up frequently and we know this thanks to the word cloud of the results in the middle show.  Looking like there may be some remote code execution on an SMB vulnerability.  The table at the bottom lists out vulnerabilites and relative info such as the severity.  Let's dig deeper and click on the first high severity vulnerability.</p>
   <img src="https://i.postimg.cc/bNQ1Rgvc/high.png" alt="high"/>
-  <img src="https://i.postimg.cc/bvY0rnpX/severe.png" alt="high"/>
-   <img src="https://i.postimg.cc/HntsrrTK/new.png" alt="high"/>
+  <p>Lot's of great details can be found here.  This vulnerability exists thanks to an error in how SMB is handling certain requests.  It is confirmed by sending an SMB transaction request with FID=0(file identifier).  Down towards the bottom we see some CVE's.  Researching that first CVE brings us<a href="https://www.cvedetails.com/cve-details.php?t=1&cve_id=CVE-2017-0143">to this CVE Details page</a>.  This page shows that there are five metasploit modules for this vulnerability, which are identified at the bottom.  EternalBlue shows up as well as EternalRomance, which was used to exploit the machine in the writeup.</p>
 </body>
