@@ -3,7 +3,7 @@
 
 @import "slate";
 body overflow-x: visible
-body.inner {
+section#main_content.inner {
     position: relative;
     max-width: 640px;
     padding: 20px 10px;
