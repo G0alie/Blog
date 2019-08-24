@@ -17,16 +17,16 @@ First we'll run an nmap scan on the target.
 
 </ul>
 
-<pre><img src="https://i.postimg.cc/T2C4JhvR/nmap-legacy.png"/></pre>
+<img src="https://i.postimg.cc/T2C4JhvR/nmap-legacy.png"/>
 
 Running a searchsploit on smb shows us some remote code execution vulnerabilities.  The ones that caught my attention was ms_017_10 EternalBlue.
 
 Since this is on metasploit, we will launch msfconsole and search for smb.  Using the EternalBlue exploit does not get us a shell, but there was another ms_017_10 remote code execution exploit a few lines down called EternalRomance, so lets try that out.<br><br>
-<pre><img src="https://i.postimg.cc/ZRYcMk1G/search.png" alt="search in msfconsole"/></pre>
+<img src="https://i.postimg.cc/ZRYcMk1G/search.png" alt="search in msfconsole"/>
 
 We'll set the RHOSTS to the target IP, 10.10.10.4, and run the exploit. 
 
-<pre><img src="https://i.postimg.cc/sXQF10cZ/msfconsole.png" alt="msfconsole"/></pre>
+<img src="https://i.postimg.cc/sXQF10cZ/msfconsole.png" alt="msfconsole"/>
 
 Now we have a meterpreter shell.  Using the pwd command, we see we are in the WINDOWS folder.  The user flag will be on the desktop, so A little bit of googling will show you where the Desktop file is located in windows XP systems.  We cd back to the parent directory and go to the Documents and Settings folder.  A user named John is listed, and on his desktop we find the user.txt flag.
 
