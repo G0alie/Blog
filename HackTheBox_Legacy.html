@@ -1,10 +1,10 @@
 <html>
 <h1>Hack The Box Legacy writeup</h1>
 
-Legacy is one of the easier retired machines hosted on Hack The Box, which is why I selected it as my first writeup.
+Legacy is one of the easier retired machines hosted on Hack The Box, which is why I selected it as my first writeup.<br><br>
 
 First we'll run an nmap scan on the target.
-  <pre>nmap -A -T4 -p- -oN legacy.txt 10.10.10.4</pre>
+  <blockquote>nmap -A -T4 -p- -oN legacy.txt 10.10.10.4</blockquote
 <ul> 
     <li>-A : For for version information, script scanning, and OS detection.  This shouldn't be used in real testing scenarios without permission because the script scanning portion can be intrusive and cause some damage.</li> 
     <li>-T4 : To speed the scan up in aggressive mode.  In real testing scenarios, this will probably be picked up by the IDS system.</li> 
