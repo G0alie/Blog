@@ -22,7 +22,7 @@ title: Nmap
   <img src="https://i.postimg.cc/MZ0S2R4w/stealth.png" alt="stealth nmap"/>
   <p>The first thing that is sent is a host discovery ICMP ping, to make sure the machine is running.  That sits further up in the packet capture.  Pictured above is part of the stealth scan portion finding the open port.  The grey packets are scans sent to ports that did not respond.  The first green packet is the SYN packet sent to port 80, which is open.  We know this because the next green packet is the target's response containing a SYN-ACK.  Finally, our machine sends a RST flag, making it so the connection is not established.</p>
   <h3>TCP Connect Scan</h3>
-  <p>A TCP connect scan, <b>-sT</b>, goes through a similar process, but instead of sending a RST flag, we finish the handshake and establish a connection by sending an ACK flag.  After the connection is established, we close it back off by sending a RST-ACK.  This method is noisy because it establishes a connection.</p>
+  <p>A TCP connect scan, <b>-sT</b>, goes through a similar process, but instead of sending a RST flag, we finish the handshake and establish a connection by sending an ACK flag.  After the connection is established, we close it back off by sending a RST-ACK.  This method is noisy because it establishes a connection.  This should only really be used as a last resort.</p>
   <img src="https://i.postimg.cc/90J6z6vh/full-scan.png" alt="full scan"/>
   
   <br><br>
