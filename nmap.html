@@ -4,15 +4,24 @@ title: Nmap
 ---
 
 <body>
-<h1>NMap and the TCP Handshake</h1>
-<p>Nmap is a powerful network scanning tool to use after performing some reconnaissance on a target.  This post will go over some common scans and show just how they work by capturing and analyzing the scanning traffic in wireshark.</p>
-<p> The first Nmap Scan we'll check out is the ping scan.  This is used for host discovery, to find which hosts are up in a certain network range.  This ping scan uses an ICMP ping and checks for a response to see if a host is up.  The option for a ping scan in the most recent version of Nmap is <b>-sn</b>.  Here is the syntax for the ping scan I'll run.</p>
-<blockquote>nmap -sn 10.10.10.7-8</blockquote>
-<p>For the sake of simplicity, I'm going to scan a range of only two IP addresses.  One host is down, one is up.  Here are the results of the scan.</p>
-<img src="https://i.postimg.cc/FRQ8jQXS/nmap-results.png" alt="nmap results"/>
-<p>Host 10.10.10.8 is up, we dont see anything about host 10.0.0.7, so it is down.  Let's see how it looks over the network.</p>
-<img src="https://i.postimg.cc/Y99qBgj8/ping.png" alt="ping scan"/>
-<p>Above, we see the ICMP pings in action.  The first two packets come from our ping sweep.  The ping sent to 10.10.10.8 says we got a reply in packet 9, while the ping sent to 10.10.10.7 says there is no response found.  In packet 9, we see the response from 10.10.10.8.  Since 10.10.10.8 responded, Nmap knows that host is up. Since 10.10.10.7 didn't send a response, we know that down.</p>
-
-<a href="https://linux.die.net/man/1/nmap">For more info on Nmap, click here for the man page</a>
+  <h1>NMap and the TCP Handshake</h1>
+  <p>Nmap is a powerful network scanning tool to use after performing some reconnaissance on a target.  This post will go over some common scans and show how they work by capturing and analyzing the scanning traffic in wireshark.</p>
+  <h3>Ping Scan</h3>
+  <p> The first Nmap Scan we'll check out is the ping scan.  This is used for host discovery, to find which hosts are up in a certain network range.  The ping scan uses an ICMP ping and checks for a response to see if a host is up.  The option for a ping scan in the most recent version of Nmap is <b>-sn</b>.  Here is the syntax for the ping scan I'll run.</p>
+  <blockquote>nmap -sn 10.10.10.7-8</blockquote>
+  <p>For the sake of simplicity, I'm going to scan a range of only two IP addresses.  One host is down, one is up.  Here are the results of the scan.</p>
+  <img src="https://i.postimg.cc/FRQ8jQXS/nmap-results.png" alt="nmap results"/>
+  <p>Host 10.10.10.8 is up, we dont see anything about host 10.0.0.7, so it's down.  Let's see how it looks over the network.</p>
+  <img src="https://i.postimg.cc/Y99qBgj8/ping.png" alt="ping scan"/>
+  <p>Above, we see the ICMP pings in action.  The first two packets come from our ping sweep.  The ping sent to 10.10.10.8 says there is a reply in packet 9, while the ping sent to 10.10.10.7 says there is no response found.  In packet 9, we see the response from 10.10.10.8.  Since 10.10.10.8 responded, Nmap knows that host is up. Since 10.10.10.7 didn't send a response, that host is down.</p>
+  <h3>TCP SYN Scan(Stealth scan)</h3>
+<p>Next up is the default nmap scan, a TCP SYN scan.  This is also considered a stealth scan.  It is not noisy on the network because it doesn't complete connections. The option for this is <b>-sS</b>, but Nmap will run this scan by default if no option is selected.  The SYN scan takes advantage of the TCP 3-way handshake to determine if a port is open.  It sends a packet with a SYN flag to every port in the default or assigned port range.  If a port is open, there will likely be a response from the machine containing a SYN-ACK.  Instead of finishing the 3-way handshake with a Ack, Nmap sends a RST packet.  This makes it stealthy because a connection is never established.  Let's run an Nmap SYN scan on 10.10.10.8</p>
+<img src="https://i.postimg.cc/NMWWqG85/stealth-scan.png" alt="stealth scan"/>
+  <p>Port 80 is open.  Now Let's check out the network traffic.</p>
+  <img src="https://i.postimg.cc/MZ0S2R4w/stealth.png" alt="stealth nmap"/>
+  <p>The first thing that is sent is a host discovery ICMP ping, to make sure the machine is running.  That sits further up in the packet capture.  Pictured above is the stealth scan portion finding the open port.  The grey packets are scans sent to ports that did not respond.  All of these packets 
+  
+  
+  <a href="https://linux.die.net/man/1/nmap">For more info on Nmap, click here for the man page</a>
+  <a href="https://nmap.org/book/toc.html">This is the free version of the Nmap Network Scanning book for more in-depth info</a>
 </body>
