@@ -15,13 +15,17 @@ title: Nmap
   <img src="https://i.postimg.cc/Y99qBgj8/ping.png" alt="ping scan"/>
   <p>Above, we see the ICMP pings in action.  The first two packets come from our ping sweep.  The ping sent to 10.10.10.8 says there is a reply in packet 9, while the ping sent to 10.10.10.7 says there is no response found.  In packet 9, we see the response from 10.10.10.8.  Since 10.10.10.8 responded, Nmap knows that host is up. Since 10.10.10.7 didn't send a response, that host is down.</p>
   <h3>TCP SYN Scan(Stealth scan)</h3>
-<p>Next up is the default nmap scan, a TCP SYN scan.  This is also considered a stealth scan.  It is not noisy on the network because it doesn't complete connections. The option for this is <b>-sS</b>, but Nmap will run this scan by default if no option is selected.  The SYN scan takes advantage of the TCP 3-way handshake to determine if a port is open.  It sends a packet with a SYN flag to every port in the default or assigned port range.  If a port is open, there will likely be a response from the machine containing a SYN-ACK.  Instead of finishing the 3-way handshake with a Ack, Nmap sends a RST packet.  This makes it stealthy because a connection is never established.  Let's run an Nmap SYN scan on 10.10.10.8</p>
+  <p>Next up is the default nmap scan, a TCP SYN scan.  This is also considered a stealth scan.  It is not noisy on the network because it doesn't complete connections. The option for this is <b>-sS</b>, but Nmap will run this scan by default if no option is selected.</p>
+  <p>The SYN scan takes advantage of the TCP 3-way handshake to determine if a port is open.  It sends a packet with a SYN flag to every port in the default or assigned port range.  If a port is open, there will likely be a response from the machine containing a SYN-ACK.  Instead of finishing the 3-way handshake properly with an ACK flag, Nmap sends a RST flag.  This makes it stealthy because a connection is never established.  Let's run an Nmap SYN scan on 10.10.10.8</p>
 <img src="https://i.postimg.cc/NMWWqG85/stealth-scan.png" alt="stealth scan"/>
   <p>Port 80 is open.  Now Let's check out the network traffic.</p>
   <img src="https://i.postimg.cc/MZ0S2R4w/stealth.png" alt="stealth nmap"/>
-  <p>The first thing that is sent is a host discovery ICMP ping, to make sure the machine is running.  That sits further up in the packet capture.  Pictured above is the stealth scan portion finding the open port.  The grey packets are scans sent to ports that did not respond.  All of these packets 
+  <p>The first thing that is sent is a host discovery ICMP ping, to make sure the machine is running.  That sits further up in the packet capture.  Pictured above is part of the stealth scan portion finding the open port.  The grey packets are scans sent to ports that did not respond.  The first green packet is the SYN packet sent to port 80, which is open.  We know this because the next green packet is the target's response containing a SYN-ACK.  Finally, our machine sends a RST flag, making it so the connection is not established.</p>
+  <h3>TCP Connect Scan</h3>
+  <p>A TCP connect scan,<b>-sT</b>, goes through a similar process, but instead of sending a RST flag, we finish the handshake and establish a connection by sending an ACK flag.  After the connection is established, we close it back off by sending a RST-ACK.  This method much more noisy because it establishes a connection.</p>
+  <img src="https://i.postimg.cc/90J6z6vh/full-scan.png" alt="full scan"/>
   
-  
-  <a href="https://linux.die.net/man/1/nmap">For more info on Nmap, click here for the man page</a>
+  <br><br>
+  <a href="https://linux.die.net/man/1/nmap">For more info on Nmap, click here for the man page</a><br>
   <a href="https://nmap.org/book/toc.html">This is the free version of the Nmap Network Scanning book for more in-depth info</a>
 </body>
