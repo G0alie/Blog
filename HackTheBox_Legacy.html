@@ -19,14 +19,14 @@ First we'll run an nmap scan on the target.
 
 <img src="https://i.postimg.cc/T2C4JhvR/nmap-legacy.png"/>
 
-<p>Running a searchsploit on smb shows us some remote code execution vulnerabilities.  The one that caught my attention was ms_017_10 EternalBlue.  Since this is on metasploit, we will launch msfconsole and search for smb.  Using the EternalBlue exploit does not get us a shell, but there was another ms_017_10 remote code execution exploit a few lines down called EternalRomance, so lets try that out.</p>
+<p>Running a searchsploit on SMB shows us some remote code execution vulnerabilities.  The one that caught my attention was ms_017_10 EternalBlue.  Since this is on metasploit, we will launch msfconsole and search for SMB.  Using the EternalBlue exploit does not get us a shell, but there was another ms_017_10 remote code execution exploit a few lines down called EternalRomance, so lets try that out.</p>
 <img src="https://i.postimg.cc/ZRYcMk1G/search.png" alt="search in msfconsole"/>
 
   <p>We'll set the RHOSTS to the target IP, 10.10.10.4, and run the exploit.</p>
 
 <img src="https://i.postimg.cc/sXQF10cZ/msfconsole.png" alt="msfconsole" max-width="660px"/>
 
-<p>Now we have a meterpreter shell.  Using the pwd command, we see we are in the WINDOWS folder.  The user flag will be on the desktop, so A little bit of googling will show you where the Desktop file is located in windows XP systems.  We cd back to the parent directory and go to the Documents and Settings folder.  A user named John is listed, and on his desktop we find the user.txt flag.</p>
+<p>Now we have a meterpreter shell.  Using the pwd command, we see we are in the WINDOWS folder.  The user flag will be on the desktop, so A little bit of googling will show you where the Desktop file is located in windows XP systems.  We cd back to the parent directory and go to the Documents and Settings folder.  A user named John is listed, and on his desktop, we find the user.txt flag.</p>
 
-<p>This box does not require any extra steps for privelege escalation.  We can just navigate back the the Documents and Settings directory, and cd to the Administrator folder. On the Admin's desktop lies the root.txt flag.</p>
+<p>This box does not require any extra steps for privilege escalation.  We can just navigate back the the Documents and Settings directory, and cd to the Administrator folder. On the Admin's desktop lies the root.txt flag.</p>
 </body>
